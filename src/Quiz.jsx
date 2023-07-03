@@ -5,6 +5,7 @@ import { decode } from 'html-entities';
 
 export default function Quiz() {
   const [questions, setQuestions] = useState([]);
+  const [selectedAnswers, setSeleectedAnswers] = useState([]);
 
   useEffect(() => {
     fetch(
@@ -14,10 +15,17 @@ export default function Quiz() {
       .then((data) => setQuestions(data.results));
   }, []);
 
+  let correctAnswers = [];
+  questions.map((elem) => {
+    correctAnswers.push(elem.correct_answer);
+  });
+
+  console.log(correctAnswers);
+
   console.log(questions);
   //   console.log(questions.question);
   return (
-    <div className='flex flex-col justify-center items-center space-y-8 mt-8 h-screen mb-10'>
+    <div className='flex flex-col justify-center items-center space-y-8 mt-8 h-full w-full mb-10'>
       {questions.map((elem) => {
         return (
           <Question
