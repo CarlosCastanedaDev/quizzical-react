@@ -1,11 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import { decode } from 'html-entities';
+import { nanoid } from 'nanoid';
 
-export default function Question({ question }) {
+export default function Question({
+  question,
+  incorrectAnswers,
+  correctAnswer,
+}) {
+  const push = incorrectAnswers.unshift(correctAnswer);
+  incorrectAnswers = incorrectAnswers.slice(1).sort();
+
+  console.log(incorrectAnswers);
   return (
-    <div className=' flex flex-col text-[#293264] text-2xl px-20 space-y-6 font-karla'>
-      <p className='font-bold'>{question}</p>
-      <p>Answers</p>
-      <div className='border-solid border-[#4D5B9E] border-2 w-full'></div>
+    <div className=' flex flex-col text-[#293264] text-xl px-20 space-y-6 font-karla'>
+      <p className='font-bold'>{decode(question)}</p>
+      <div className='flex space-x-4'>
+        {incorrectAnswers.map((elem) => {
+          return (
+            <p
+              key={nanoid()}
+              className='border border-[#4D5B9E] rounded-xl p-2 text-sm grow text-center hover:bg-[#D6DBF5] hover:duration-200'>
+              {decode(elem)}
+            </p>
+          );
+        })}
+      </div>
+      <div className='border-solid border-[#4D5B9E] border opacity-10 w-full'></div>
     </div>
   );
 }
