@@ -7,15 +7,17 @@ export default function Question({
   incorrectAnswers,
   correctAnswer,
 }) {
-  const push = incorrectAnswers.unshift(correctAnswer);
-  incorrectAnswers = incorrectAnswers.slice(1).sort();
+  let newArr = [];
+  incorrectAnswers.map((e) => newArr.push(e));
+  newArr.push(correctAnswer);
 
+  console.log(newArr);
   console.log(incorrectAnswers);
   return (
     <div className=' flex flex-col text-[#293264] text-xl px-20 space-y-6 font-karla'>
       <p className='font-bold'>{decode(question)}</p>
       <div className='flex space-x-4'>
-        {incorrectAnswers.map((elem) => {
+        {newArr.sort().map((elem) => {
           return (
             <p
               key={nanoid()}
